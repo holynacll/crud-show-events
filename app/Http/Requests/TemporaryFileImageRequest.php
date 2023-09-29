@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShowEventRequest extends FormRequest
+class TemporaryFileImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,7 @@ class ShowEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string'],
-            'attractions' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'start_date' => ['required', 'date'],
-            'img_path' => ['required', 'string'],
-            'price' => ['required', 'numeric']
+            'file' => ['required', 'image'],
         ];
     }
 }

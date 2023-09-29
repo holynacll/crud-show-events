@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ShowEventController;
+use App\Http\Controllers\TemporaryFileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('show-events', ShowEventController::class)
-    ->only(['index', 'store', 'update', 'destroy']);
+    ->only(['index', 'show', 'store', 'update', 'destroy']);
+
+Route::post('upload-file-image', [TemporaryFileController::class, 'createFileImage']);

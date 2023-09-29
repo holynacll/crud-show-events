@@ -5,7 +5,7 @@
     <div class="w-2/3 h-72 lg:flex">
       <!-- img -->
       <!-- <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" :style="`background-image: url()`"> -->
-        <img :src="`/images/${form.img_path}`" alt="" class="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden">
+        <img :src="`images/${form.img_path}`" alt="" class="h-48 lg:h-auto lg:w-64 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden">
       <!-- </div> -->
       <div class="w-2/3 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
         <div class="mb-8">
@@ -22,7 +22,7 @@
     </div>
 
 
-    <form class="space-y-6 mt-8" @submit.prevent="handleSave()">
+    <form class="space-y-6 mt-8" @submit.prevent="handleUpdate()">
       <!-- title input -->
       <div class="space-y-4 rounded-md shadow-sm">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -134,7 +134,7 @@
         type="submit" 
         class="bg-sky-700 hover:bg-sky-600 text-white font-bold py-2 px-2 rounded inline-flex items-center"
       >
-        Save
+        Update
       </button>
     </form>
   </div>
@@ -142,20 +142,18 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { handleInvalidForm } from "../utils";
   import { useRouter } from 'vue-router';
+  import axios from 'axios';
   const router = useRouter()
-
-  const form = ref({
-    title: '',
-    attractions: '',
-    description: '',
-    start_date: currentDate(),
-    img_path: 'default.png',
-    price: '',
-  });
-
+  const props = defineProps({
+    id: {
+      required: true,
+      type: String
+    }
+  })
+  const form = ref({});
   const errors = ref({
     title: [],
     attractions: [],
@@ -165,10 +163,16 @@
     price: [],
   });
 
+  const getShowEvent = async () => {
+    let response = await axios.get(`/api/show-events/${props.id}`)
+    form.value = response.data.data
+  }
+
   const handleFileUpload = async (event) => {
     const filename = await createTemporaryFile(event.target.files[0])
     form.value.img_path = filename
   }
+
   async function createTemporaryFile(file) {
       let config  = {
           headers:{
@@ -178,17 +182,15 @@
       const response = await axios.post("/api/upload-file-image", { file }, config);
       return response.data.filename
   }
-  async function handleSave() {
+
+  async function handleUpdate() {
     try {
-      await axios.post("/api/show-events", form.value);
+      await axios.put(`/api/show-events/${props.id}`, form.value);
       await router.push({ path: '/' });
     } catch (err) {
       handleInvalidForm(err, errors);
     }
   }
-  function currentDate() {
-    const d = new Date();
-    const date = d.toISOString().slice(0,10);
-    return date;
-  }
+
+  onMounted(getShowEvent)
 </script>

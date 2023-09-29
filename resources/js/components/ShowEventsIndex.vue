@@ -32,20 +32,26 @@
           v-for="showEvent in laravelData.data"
           :key="showEvent.id"
         >
-          <td class="whitespace-nowrap px-6 py-4 font-medium">{{ showEvent.id }}</td>
-          <td class="whitespace-nowrap px-6 py-4">{{ showEvent.img_path }}</td>
-          <td class="whitespace-nowrap px-6 py-4">{{ showEvent.title }}</td>
-          <td class="whitespace-nowrap px-6 py-4">{{ showEvent.attractions }}</td>
-          <td class="whitespace-nowrap px-6 py-4">{{ showEvent.description }}</td>
-          <td class="whitespace-nowrap px-6 py-4">{{ showEvent.start_date }}</td>
-          <td class="whitespace-nowrap px-6 py-4">{{ showEvent.price }}</td>
+          <!-- <td class="whitespace-nowrap px-6 py-4 font-medium">{{ showEvent.id }}</td> -->
+          <td colspan="2" class="w-64 whitespace-nowrap px-6 py-4">
+            <img 
+              :src="`images/${showEvent.img_path}`" 
+              
+              class="w-64 h-32"
+            >
+          </td>
+          <td class="px-6 py-4">{{ showEvent.title }}</td>
+          <td class="px-6 py-4">{{ showEvent.attractions }}</td>
+          <td class="px-6 py-4">{{ showEvent.description }}</td>
+          <td class="px-6 py-4">{{ showEvent.start_date }}</td>
+          <td class="px-6 py-4">{{ showEvent.price }}</td>
           <td class="whitespace-nowrap px-6 py-4 space-x-3">
-            <button 
-              @click=""
+            <router-link 
+              :to="{ name: 'showevents.edit', params: { id: showEvent.id }}"
               class="bg-yellow-800 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded inline-flex items-center"
             >
               Edit
-            </button> 
+            </router-link> 
             <button 
               @click="destroyShowEvent(showEvent.id)"
               class="bg-red-800 hover:bg-red-700 text-white font-bold py-2 px-4 rounded inline-flex items-center"

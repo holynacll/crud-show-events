@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('attractions');
             $table->string('description');
-            $table->timestamp('start_date');
+            $table->date('start_date');
             $table->string('img_path');
             $table->float('price');
             $table->timestamps();
