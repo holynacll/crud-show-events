@@ -11,7 +11,7 @@ class ShowEventController extends Controller
 {
     public function index()
     {
-        return ShowEventResource::collection(ShowEvent::orderBy('id', 'desc')->paginate(5));
+        return ShowEventResource::collection(ShowEvent::orderBy('updated_at', 'desc')->paginate(5));
     }
 
     public function store(ShowEventRequest $request)

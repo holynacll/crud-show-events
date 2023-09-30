@@ -10,7 +10,7 @@
       <div class="w-2/3 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
         <div class="mb-8">
           <!-- start date -->
-          <p class="text-xl text-gray-600 uppercase font-semibold">{{ form.start_date }}</p>
+          <p class="text-xl text-gray-600 uppercase font-semibold">{{ getBannerDate }}</p>
           <!-- title -->
           <div class="text-gray-900 font-bold text-xl mb-2 uppercase">{{ form.title || 'title' }}</div> 
           <!-- attractions -->
@@ -32,7 +32,6 @@
           <input 
             type="text" 
             name="title"
-            id="title" 
             v-model="form.title" 
             class="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Write the title here..."
@@ -43,14 +42,13 @@
 
       <!-- attraction input -->
       <div class="space-y-4 rounded-md shadow-sm">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="attractions">
           Attractions
         </label>
         <div class="flex flex-col rounded-md sm:max-w-md">
           <input 
             type="text" 
-            name="title"
-            id="title" 
+            name="attractions"
             v-model="form.attractions" 
             class="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Write the attractions here..."
@@ -61,29 +59,28 @@
 
       <!-- start date input -->
       <div class="space-y-4 rounded-md shadow-sm">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-          Show Date
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="datetime">
+          Show Datetime
         </label>
         <div class="flex flex-col rounded-md sm:max-w-md">
           <input 
-            type="date" 
-            name="date"
-            id="date" 
-            v-model="form.start_date" 
+            type="datetime-local" 
+            name="datetime"
+            v-model="form.start_datetime" 
             class="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
-          <p class="text-red-600 p-1" v-for="error in errors.start_date">{{ error }}</p>
+          <p class="text-red-600 p-1" v-for="error in errors.start_datetime">{{ error }}</p>
         </div>
       </div>
 
       <!-- Description input -->
       <div class="space-y-4 rounded-md shadow-sm">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
           Description
         </label>
         <div class="flex flex-col rounded-md sm:max-w-md">
           <textarea 
-            id="message" 
+            name="description" 
             rows="4"
             v-model="form.description"
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
@@ -95,14 +92,13 @@
 
       <!-- price input -->
       <div class="space-y-4 rounded-md shadow-sm">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="price">
           Price
         </label>
         <div class="flex flex-col rounded-md sm:max-w-md">
           <input 
             type="number" 
             name="price"
-            id="price" 
             v-model="form.price" 
             class="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Write the price here..."
@@ -113,14 +109,13 @@
 
       <!-- image input -->
       <div class="space-y-4 rounded-md shadow-sm">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="img">
           Image
         </label>
         <div class="flex flex-col rounded-md sm:max-w-md">
           <input 
             type="file" 
             name="img"
-            id="img" 
             @change="handleFileUpload" 
             class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
@@ -142,7 +137,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import { ref, computed, onMounted } from 'vue';
   import { handleInvalidForm } from "../utils";
   import { useRouter } from 'vue-router';
   const router = useRouter()
@@ -151,7 +146,7 @@
     title: '',
     attractions: '',
     description: '',
-    start_date: currentDate(),
+    start_datetime: '',
     img_path: 'default.png',
     price: '',
   });
@@ -160,7 +155,7 @@
     title: [],
     attractions: [],
     description: [],
-    start_date: [],
+    start_datetime: [],
     img_path: [],
     price: [],
   });
@@ -186,9 +181,7 @@
       handleInvalidForm(err, errors);
     }
   }
-  function currentDate() {
-    const d = new Date();
-    const date = d.toISOString().slice(0,10);
-    return date;
-  }
+
+  const getBannerDate = computed(() => form.value.start_datetime.toLocaleString().replace(/\,/g,'').slice(0, 10)) 
+
 </script>

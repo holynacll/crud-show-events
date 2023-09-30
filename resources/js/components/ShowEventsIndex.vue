@@ -21,8 +21,9 @@
           <th scope="col" class="px-6 py-4">Title</th>
           <th scope="col" class="px-6 py-4">Attractions</th>
           <th scope="col" class="px-6 py-4">Description</th>
-          <th scope="col" class="px-6 py-4">Start Date</th>
+          <th scope="col" class="px-6 py-4">Start Datetime</th>
           <th scope="col" class="px-6 py-4">Price</th>
+          <th scope="col" class="px-6 py-4">Status</th>
           <th scope="col" class="px-6 py-4">Actions</th>
         </tr>
       </thead>
@@ -43,8 +44,9 @@
           <td class="px-6 py-4">{{ showEvent.title }}</td>
           <td class="px-6 py-4">{{ showEvent.attractions }}</td>
           <td class="px-6 py-4">{{ showEvent.description }}</td>
-          <td class="px-6 py-4">{{ showEvent.start_date }}</td>
+          <td class="px-6 py-4">{{ showEvent.start_datetime }}</td>
           <td class="px-6 py-4">{{ showEvent.price }}</td>
+          <td class="px-6 py-4">{{ showEvent.active ? 'Active' : 'Inactive' }}</td>
           <td class="whitespace-nowrap px-6 py-4 space-x-3">
             <router-link 
               :to="{ name: 'showevents.edit', params: { id: showEvent.id }}"

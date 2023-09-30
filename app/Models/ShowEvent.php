@@ -13,9 +13,16 @@ class ShowEvent extends Model
         'title',
         'attractions',
         'description',
-        'start_date',
+        'start_datetime',
         'img_path',
-        'price'
+        'price',
+        'active'
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'start_datetime',
     ];
 
 }

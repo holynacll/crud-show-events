@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('attractions');
             $table->string('description');
-            $table->date('start_date');
+            $table->dateTime('start_datetime');
             $table->string('img_path');
             $table->float('price');
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });
     }

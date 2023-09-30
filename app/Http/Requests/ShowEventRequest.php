@@ -25,9 +25,10 @@ class ShowEventRequest extends FormRequest
             'title' => ['required', 'string'],
             'attractions' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'start_date' => ['required', 'date'],
+            'start_datetime' => ['required', 'date'],
             'img_path' => ['required', 'string'],
-            'price' => ['required', 'numeric']
+            'price' => ['required', 'numeric'],
+            'active' => ['boolean'],
         ];
     }
 }
