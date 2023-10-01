@@ -97,7 +97,8 @@
         </label>
         <div class="flex flex-col rounded-md sm:max-w-md">
           <input 
-            type="number" 
+            type="number"
+            step="0.01"
             name="price"
             v-model="form.price" 
             class="shadow appearance-none border rounded w-full py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

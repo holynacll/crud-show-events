@@ -19,6 +19,8 @@ php artisan migrate
 
 php artisan db:seed
 
+chmod 0775 -R storage/ database/ bootstrap/
+
 npm i
 
 npm run dev
