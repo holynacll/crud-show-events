@@ -83,7 +83,7 @@
             name="description"
             rows="4"
             v-model="form.description"
-            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
+            class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
             placeholder="Write the description here...">
           </textarea>
           <p class="text-red-600 p-1" v-for="error in errors.description">{{ error }}</p>
